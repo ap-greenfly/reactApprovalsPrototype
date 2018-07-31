@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {hot} from 'react-hot-loader';
+import AppNav from './AppNav'
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -10,7 +11,10 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>Hello world!</h1>
+                <AppNav/>
+                <div className="container-fluid">
+                    <h1>Hello world!</h1>
+                </div>
             </div>
         );
     }
