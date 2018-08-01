@@ -11,6 +11,8 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack.config.dev';
 
+import proxy from 'http-proxy-middleware';
+
 const bundler = webpack(config);
 
 // Run Browsersync and use middleware for Hot Module Replacement
@@ -24,6 +26,12 @@ browserSync({
 
     middleware: [
       historyApiFallback(),
+
+      proxy('/assets', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/login', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/ajax', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/graphql', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/graphiql', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
 
       webpackDevMiddleware(bundler, {
         // Dev middleware can't access config, so we provide publicPath
