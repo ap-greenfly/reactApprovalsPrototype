@@ -1,12 +1,12 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import {
     Collapse,
     Navbar,
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    NavLink
+    NavItem
 } from 'reactstrap'
 
 class AppNav extends React.Component {
@@ -30,18 +30,18 @@ class AppNav extends React.Component {
         return (
             <div>
                 <Navbar expand="md" color="light">
-                    <NavbarBrand href='/'>Greenfly Approvals React</NavbarBrand>
+                    <Link to="/"><NavbarBrand tag="span">Greenfly Approvals React</NavbarBrand></Link>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/list/pending">Pending</NavLink>
+                                <NavLink to="/approvals/list/pending" className="nav-link">Pending</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/list/sent">Sent</NavLink>
+                                <NavLink to="/approvals/list/sent" className="nav-link">Sent</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/list/lapsed">Lapsed</NavLink>
+                                <NavLink to="/approvals/list/lapsed" className="nav-link">Lapsed</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>

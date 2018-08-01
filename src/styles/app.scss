@@ -1,1 +1,16 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+.nav-link.active {
+    position: relative;
+    color: #000;
+    cursor: default;
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: $nav-link-padding-x / 2;
+        bottom: 0;
+        width: calc(100% - #{$nav-link-padding-x});
+        border-bottom: 2px solid $primary;
+    }
+}
