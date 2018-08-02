@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { fetchApprovalsList, approvalsListPayload } from '../../actions/listActions'
 import { DebounceInput } from 'react-debounce-input';
 
-import ListRow from '../ListRow';
+import { Table } from 'reactstrap';
 import UltimatePaginationBootstrap4 from 'react-ultimate-pagination-bootstrap-4'
+import ListRow from '../ListRow';
 
 class ApprovalsListPage extends React.Component {
     constructor(props) {
@@ -42,6 +43,7 @@ class ApprovalsListPage extends React.Component {
     }
 
     onPageChange(page) {
+        window.scroll(0, 0, {behavior: 'smooth'});
         this.fetchList(page);
     }
 
@@ -82,7 +84,7 @@ class ApprovalsListPage extends React.Component {
                         />
                     </div>
                 </h1>
-                <table className="table">
+                <Table striped responsive>
                     <thead>
                         <tr>
                             <th>Request</th>
@@ -114,7 +116,7 @@ class ApprovalsListPage extends React.Component {
                         })
                     }
                     </tbody>
-                </table>
+                </Table>
 
                 {!loading && pagination && pagination.totalPages > 0 &&
                     <UltimatePaginationBootstrap4
