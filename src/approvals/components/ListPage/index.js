@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchApprovalsList } from '../../actions/listActions'
+import { fetchApprovalsList, approvalsListPayload } from '../../actions/listActions'
+
+import ListRow from '../ListRow';
+import UltimatePaginationBootstrap4 from 'react-ultimate-pagination-bootstrap-4'
 
 class ApprovalsListPage extends React.Component {
     constructor(props) {
@@ -11,6 +14,8 @@ class ApprovalsListPage extends React.Component {
         this.state = {
             initialized: false
         };
+
+        this.onPageChange = this.onPageChange.bind(this);
     }
 
     componentDidMount() {
@@ -20,19 +25,28 @@ class ApprovalsListPage extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params !== prevProps.match.params) {
-            this.fetchList();
+        if (this.props.match.params.type !== prevProps.match.params.type) {
+            this.fetchList(1);
         }
     }
 
-    fetchList() {
+    fetchList(page) {
+        if (page) {
+            this.props.dispatch(approvalsListPayload({page: page}));
+        }
+
         return this.props.dispatch(fetchApprovalsList({ type: this.props.match.params.type }));
+    }
+
+    onPageChange(page) {
+        this.fetchList(page);
     }
 
     render() {
         const { type } = this.props.match.params;
         const { listItems } = this.props;
         const loading = this.props.listMeta.isFetching;
+        const pagination = this.props.listMeta.pagination;
 
         return (
             <div>
@@ -68,18 +82,19 @@ class ApprovalsListPage extends React.Component {
                     }
                     { !loading &&
                         listItems.map(item => {
-                            return <tr key={item.id}>
-                                <td>{ item.request.title }</td>
-                                <td>{ item.created }</td>
-                                <td>{ item.request.mediaRequestId ? 'Content Request' : 'Share Request' }</td>
-                                <td>{ item.status }</td>
-                                <td>{ item.due }</td>
-                                <td>...</td>
-                            </tr>
+                            return <ListRow item={item} key={item.id}/>
                         })
                     }
                     </tbody>
                 </table>
+
+                {!loading && pagination && pagination.totalPages &&
+                    <UltimatePaginationBootstrap4
+                        currentPage={pagination.page}
+                        totalPages={pagination.totalPages}
+                        onChange={this.onPageChange}
+                    />
+                }
             </div>
         );
     }

@@ -15,6 +15,18 @@ export function fetchApprovalsList(payload) {
             params: getState()[subState].payload
         })
             .then(response => {
+                const { data } = response;
+
+                // refetch last page if currently request page is invalid
+                if (!data.items.length && data.pagination.totalResults > 0 && data.pagination.page > 1) {
+                    return Axios.get('/ajax/approvals', {
+                        params: Object.assign({}, getState()[subState].payload, {page: data.pagination.totalPages})
+                    });
+                } else {
+                    return response;
+                }
+            })
+            .then(response => {
                 dispatch(fetchApprovalsListDone(response.data));
             })
             .catch(response => {
