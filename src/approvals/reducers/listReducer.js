@@ -9,7 +9,8 @@ export default function approvalListReducer(state = {
     payload: {
         page: 1,
         pageSize: 20,
-        type: 'pending'
+        type: 'pending',
+        keywords: ''
     }
 }, action) {
     switch (action.type) {
