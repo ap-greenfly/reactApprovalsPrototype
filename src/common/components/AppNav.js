@@ -29,7 +29,7 @@ class AppNav extends React.Component {
     render() {
         return (
             <div>
-                <Navbar expand="md" color="light">
+                <Navbar expand="md" color="light" light>
                     <Link to="/"><NavbarBrand tag="span">Greenfly Approvals React</NavbarBrand></Link>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
