@@ -21,7 +21,7 @@ const ListRow = ({ item, onClickDelete }) => {
                 <UncontrolledDropdown size="sm">
                     <DropdownToggle>&hellip;</DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem tag={Link} to="/approvals/test/details">View</DropdownItem>
+                        <DropdownItem tag={Link} to={`/approvals/${item.id}/details`}>View</DropdownItem>
                         <DropdownItem onClick={onClickDeleteHandler}>Delete</DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>

@@ -1,6 +1,6 @@
 import * as actions from '../actions/listActions';
 
-export default function approvalListReducer(state = {
+export default function approvalsListReducer(state = {
     items: [],
     meta: {
         isFetching: false,

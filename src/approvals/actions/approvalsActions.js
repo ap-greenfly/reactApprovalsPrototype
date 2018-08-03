@@ -1,8 +1,7 @@
 import ApprovalsApi from '../api';
-import {APPROVALS_LIST_FETCH_DONE} from "./listActions";
 
-export const APPROVAL_DELETE_START = 'APPROVAL_DELETE_START';
-export const APPROVAL_DELETE_DONE = 'APPROVAL_DELETE_DONE';
+export const APPROVALS_DELETE_START = 'APPROVALS_DELETE_START';
+export const APPROVALS_DELETE_DONE = 'APPROVALS_DELETE_DONE';
 
 export function deleteApproval(approval) {
     return (dispatch) => {
@@ -22,19 +21,20 @@ export function deleteApproval(approval) {
     }
 }
 export function deleteApprovalStart(approval) {
-    return {type: APPROVAL_DELETE_START, payload: approval};
+    return {type: APPROVALS_DELETE_START, payload: approval};
 }
 export function deleteApprovalDone(data, error) {
     if (!error) {
         return {
-            type: APPROVAL_DELETE_DONE,
+            type: APPROVALS_DELETE_DONE,
             payload: data
         }
     } else {
         return {
-            type: APPROVALS_LIST_FETCH_DONE,
+            type: APPROVALS_DELETE_DONE,
             payload: data,
             error
         }
     }
 }
+
