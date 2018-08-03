@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchApprovalsList, approvalsListPayload } from '../../actions/listActions'
+import { deleteApproval } from '../../actions/approvalsActions';
 import { DebounceInput } from 'react-debounce-input';
+import { toastr } from 'react-redux-toastr';
 
-import { Table } from 'reactstrap';
+import { Table, Modal, ModalBody, ModalFooter, ModalHeader, Button } from 'reactstrap';
 import UltimatePaginationBootstrap4 from 'react-ultimate-pagination-bootstrap-4'
 import ListRow from '../ListRow';
 
@@ -15,11 +16,16 @@ class ApprovalsListPage extends React.Component {
 
         this.state = {
             initialized: false,
-            search: props.listPayload.keywords
+            search: props.listPayload.keywords,
+            deleteConfirmModal: false,
+            approvalToDelete: null
         };
 
         this.onPageChange = this.onPageChange.bind(this);
         this.searchOnChange = this.searchOnChange.bind(this);
+        this.toggleDeleteConfirmModal = this.toggleDeleteConfirmModal.bind(this);
+        this.confirmDeleteApproval = this.confirmDeleteApproval.bind(this);
+        this.doDelete = this.doDelete.bind(this);
     }
 
     componentDidMount() {
@@ -61,6 +67,33 @@ class ApprovalsListPage extends React.Component {
 
         this.props.dispatch(approvalsListPayload(payloadUpdate));
         this.fetchList();
+    }
+
+    toggleDeleteConfirmModal() {
+        this.setState({
+            deleteConfirmModal: !this.state.deleteConfirmModal
+        });
+    }
+
+    confirmDeleteApproval(approval) {
+        this.setState({
+            deleteConfirmModal: true,
+            approvalToDelete: approval
+        });
+    }
+
+    doDelete() {
+        this.toggleDeleteConfirmModal();
+        this.props.dispatch(deleteApproval(this.state.approvalToDelete))
+            .then(() => {
+                this.fetchList();
+                toastr.success('Approval Deleted!');
+            })
+            .catch(response => {
+                if (response.status === 400) {
+                    toastr.warning('Unable to Delete', response.data.error);
+                }
+            });
     }
 
     render() {
@@ -112,7 +145,7 @@ class ApprovalsListPage extends React.Component {
                     }
                     {this.state.initialized &&
                         listItems.map(item => {
-                            return <ListRow item={item} key={item.id}/>
+                            return <ListRow item={item} key={item.id} onClickDelete={this.confirmDeleteApproval}/>
                         })
                     }
                     </tbody>
@@ -125,6 +158,17 @@ class ApprovalsListPage extends React.Component {
                         onChange={this.onPageChange}
                     />
                 }
+
+                <Modal isOpen={this.state.deleteConfirmModal} toggle={this.toggleDeleteConfirmModal} onClosed={this.onDeleteConfirmModalClose}>
+                    <ModalHeader>Are you sure?</ModalHeader>
+                    <ModalBody>
+                        Hol{"'"} up bruh, are you super sure you want to delete this request approval?
+                    </ModalBody>
+                    <ModalFooter size="sm">
+                        <Button color="secondary" onClick={this.toggleDeleteConfirmModal}>Cancel</Button>
+                        <Button color="danger" onClick={this.doDelete}>Delete It!</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }

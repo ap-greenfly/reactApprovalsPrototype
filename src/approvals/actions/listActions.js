@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import ApprovalsApi from '../api';
 
 export const APPROVALS_LIST_FETCH = 'APPROVALS_LIST_FETCH';
 export const APPROVALS_LIST_PAYLOAD = 'APPROVALS_LIST_PAYLOAD';
@@ -11,27 +11,27 @@ export function fetchApprovalsList(payload) {
         dispatch(approvalsListPayload(payload));
         dispatch(fetchApprovalsListBegin());
 
-        return Axios.get('/ajax/approvals', {
-            params: getState()[subState].payload
-        })
+        let promise = ApprovalsApi.getApprovals(getState()[subState].payload)
             .then(response => {
                 const { data } = response;
 
                 // refetch last page if currently request page is invalid
                 if (!data.items.length && data.pagination.totalResults > 0 && data.pagination.page > 1) {
-                    return Axios.get('/ajax/approvals', {
-                        params: Object.assign({}, getState()[subState].payload, {page: data.pagination.totalPages})
-                    });
+                    return ApprovalsApi.getApprovals(Object.assign({}, getState()[subState].payload, {page: data.pagination.totalPages}));
                 } else {
                     return response;
                 }
-            })
+            });
+
+        promise
             .then(response => {
                 dispatch(fetchApprovalsListDone(response.data));
             })
-            .catch(response => {
-                dispatch(fetchApprovalsListDone(null, response.data));
+            .catch(error => {
+                dispatch(fetchApprovalsListDone(null, error.response.data));
             });
+
+        return promise;
     }
 }
 

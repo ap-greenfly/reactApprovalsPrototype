@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import {hot} from 'react-hot-loader';
 import { Switch, Route } from 'react-router-dom';
+import ReduxToastr from 'react-redux-toastr';
 
 import AppNav from './AppNav';
 import HomePage from '../components/HomePage';
@@ -17,6 +18,12 @@ class App extends React.Component {
     render() {
         return (
             <div>
+                <ReduxToastr
+                    timeOut={8000}
+                    transitionIn="fadeIn"
+                    transitionOut="fadeOut"
+                />
+
                 <AppNav/>
                 <div className="container-fluid">
                     <Switch>
