@@ -12,7 +12,7 @@ const ListRow = ({ item, onClickDelete }) => {
 
     return (
         <tr>
-            <td>{ item.request.title }</td>
+            <td><Link to={`/approvals/${item.id}/details`}>{ item.request.title }</Link></td>
             <td>{ item.created }</td>
             <td>{ item.request.mediaRequestId ? 'Content Request' : 'Share Request' }</td>
             <td>{ item.status }</td>
