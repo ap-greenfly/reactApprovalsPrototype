@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 const QUERY_APPROVAL = 'query Approval($id:ID!){approval(id:$id){id instructions created due completed lapsed locked status approvers{id user{id firstName lastName name roles photo}rejected approved status}mediaRequest{id contributors{id firstName lastName name contributorManager{id}photo}}shareRequest{id contributors{id firstName lastName name contributorManager{id}photo}}}}';
+const MUTATION_REMOVE_APPROVER = 'mutation removeApprover($id:ID!){removeApprover(id:$id)}';
 
 class ApprovalsApi {
     static getApprovals(payload = {
@@ -55,6 +56,20 @@ class ApprovalsApi {
                 };
             })
             .catch(error => Promise.reject(error.response));
+    }
+
+    static removeApprover(id) {
+        return Axios.post('/graphql', {
+            query: MUTATION_REMOVE_APPROVER,
+            variables: { id }
+        })
+            .then(response => {
+                if (response.data.errors) {
+                    return Promise.reject(response.data.errors[0].message);
+                }
+
+                return response.data.data;
+            });
     }
 }
 
