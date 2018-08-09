@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './style.scss';
+
 class ApprovalsDetailUserListItem extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +27,7 @@ class ApprovalsDetailUserListItem extends React.Component {
         const style = this.state.pending ? {cursor: 'wait'} : {};
 
         return (
-            <li style={ style }>
+            <li className={styles.user} style={ style }>
                 <span className={ avatarClassName } style={{backgroundImage: `url(${user.photo})`}}/>
                 <span className="name">{ user.name }</span>
                 { canRemove && <a onClick={ this.handleRemove } href='#'>Remove</a> }

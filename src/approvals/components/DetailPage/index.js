@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/detailActions';
 import { getFilteredApprovers } from '../../reducers/detailReducer';
 
+import style from './style.scss';
 import ApprovalsDetailRequest from '../DetailRequest';
 import ApprovalsDetailApprovers from '../DetailApprovers';
 import ApprovalsDetailContributors from '../DetailContributors';
@@ -49,21 +50,25 @@ class ApprovalsDetailPage extends React.Component {
             {!isLoaded && <h2 className="text-muted">Loading...</h2>}
 
             {isLoaded &&
-                <div className="detail">
-                    <div className="detail__request"><ApprovalsDetailRequest request={request}/></div>
-                    <div className="detail__approvers">
-                        <h4>Approvers</h4>
-                        <ApprovalsDetailApprovers
-                            approvers={this.props.approvers}
-                            remove={ this.removeApprover }
-                            onFilter={this.filterApprovers}
-                        />
+                <div className={style.detail}>
+                    <div className={style.detail__request}><ApprovalsDetailRequest request={request}/></div>
+                    <div className={style.detail__cols}>
+                        <div>
+                            <h4>Approvers</h4>
+                            <ApprovalsDetailApprovers
+                                approvers={this.props.approvers}
+                                remove={ this.removeApprover }
+                                onFilter={this.filterApprovers}
+                            />
+                        </div>
+                        <div>
+                            <h4>Contributors</h4>
+                            <ApprovalsDetailContributors contributors={this.getContributorList() || []}/>
+                        </div>
+                        <div>
+                            Status &amp; Comments TBD
+                        </div>
                     </div>
-                    <div className="detail__contributors">
-                        <h4>Contributors</h4>
-                        <ApprovalsDetailContributors contributors={this.getContributorList() || []}/>
-                    </div>
-                    <div className="detail__statusAndComments">Status &amp; Comments TBD</div>
                 </div>
             }
             </div>

@@ -8,7 +8,7 @@ class ApprovalsDetailContributors extends React.Component {
         const { contributors } = this.props;
 
         return (
-            <ul>
+            <ul className="list-unstyled">
                 {contributors.map(contributor => {
                     return <ApprovalDetailUserListItem
                         key={ contributor.id }

@@ -1,0 +1,17 @@
+.header {
+    &:before {
+        content: 'Request Details: ';
+        color: cornflowerblue;
+    }
+}
+.headerItalic {
+    composes: header;
+    font-style: italic;
+}
+
+
+.header__child {
+    color: gray;
+    font-weight: lighter;
+    font-size: 20px;
+}

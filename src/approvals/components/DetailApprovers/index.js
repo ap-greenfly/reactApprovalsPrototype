@@ -44,7 +44,7 @@ class ApprovalsDetailApprovers extends React.Component {
         return (
             <div>
                 <div className="d-flex">
-                    <div>
+                    <div className="flex-grow-1 mb-3">
                         <DebounceInput
                             className="form-control"
                             placeholder="Search..."
@@ -63,7 +63,7 @@ class ApprovalsDetailApprovers extends React.Component {
                         </select>
                     </div>
                 </div>
-                <ul>
+                <ul className="list-unstyled">
                     {approvers.map(approver => {
                         return <ApprovalDetailUserListItem
                             key={approver.id}
