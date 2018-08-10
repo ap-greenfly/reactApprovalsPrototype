@@ -4,6 +4,7 @@
 import browserSync from 'browser-sync';
 import historyApiFallback from 'connect-history-api-fallback';
 import {chalkProcessing} from './chalkConfig';
+import proxy from "http-proxy-middleware";
 
 /* eslint-disable no-console */
 
@@ -23,5 +24,12 @@ browserSync({
     'src/*.html'
   ],
 
-  middleware: [historyApiFallback()]
+  middleware: [
+      historyApiFallback(),
+      proxy('/assets', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/login', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/ajax', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/graphql', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
+      proxy('/graphiql', {target: 'https://www.greenflytest.com:443', changeOrigin: true })
+  ]
 });

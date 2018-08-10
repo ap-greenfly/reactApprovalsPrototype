@@ -1,0 +1,7 @@
+.header {
+    &:before {
+        content: 'Approvals: ';
+        font-style: italic;
+        font-weight: lighter;
+    }
+}

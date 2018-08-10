@@ -3,6 +3,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 
+import getCssConfig from './tools/cssConfig';
+
 export default {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json']
@@ -94,65 +96,14 @@ export default {
                 ]
             },
             {
-                test: /(\.css|\.scss|\.sass)$/,
-                exclude: /\/styles\//,
-                use: getCssOptions(true)
+                test: /\/styles\/app.scss$/,
+                use: getCssConfig(false, 'dev')
             },
             {
-                test: /\/styles\/app.scss$/,
-                use: getCssOptions(false)
+                test: /(\.css|\.scss|\.sass)$/,
+                exclude: /\/styles\//,
+                use: getCssConfig(true, 'dev')
             }
         ]
     }
 };
-
-
-function getCssOptions(useModules) {
-    const withoutModules = {
-        sourceMap: true
-    };
-    const withModules = {
-        importLoaders: 1,
-        localIdentName: '[local]___[hash:base64:5]',
-        modules: true,
-        sourceMap: true
-    };
-
-    let options = [
-        'style-loader',
-        {
-            loader: 'css-loader',
-            options: useModules ? withModules : withoutModules
-        }, {
-            loader: 'postcss-loader',
-            options: {
-                plugins: () => [
-                    require('autoprefixer')
-                ],
-                sourceMap: true
-            }
-        }, {
-            loader: 'sass-loader',
-            options: {
-                includePaths: [path.resolve(__dirname, 'src', 'scss')],
-                sourceMap: true
-            }
-        }
-    ];
-
-    if (withModules) {
-        options.push({
-            loader: 'sass-resources-loader',
-            options: {
-                resources: [
-                    path.resolve(__dirname, './node_modules/bootstrap/scss/_functions.scss'),
-                    path.resolve(__dirname, './node_modules/bootstrap/scss/_variables.scss'),
-                    path.resolve(__dirname, './node_modules/bootstrap/scss/mixins/_breakpoints.scss'),
-                    path.resolve(__dirname, './src/styles/_variables.scss')
-                ]
-            }
-        });
-    }
-
-    return options;
-}

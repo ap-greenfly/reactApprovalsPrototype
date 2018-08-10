@@ -16,3 +16,21 @@
         }
     }
 }
+
+.user__status {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-color: $gray-300;
+}
+
+.user__statusApproved {
+    composes: user__status;
+    background-color: green;
+}
+
+.user__statusRejected {
+    composes: user__status;
+    background-color: red;
+}

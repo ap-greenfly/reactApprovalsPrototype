@@ -72,6 +72,7 @@ class ApprovalsDetailApprovers extends React.Component {
                             isCm={approver.user.roles.includes('COMPANY_CONTRIBUTOR_MANAGER')}
                             canRemove={ !!approvers.length }
                             onClickRemove={ remove }
+                            status={ approver.status }
                         />
                     })}
 

@@ -25,13 +25,19 @@ class ApprovalsDetailUserListItem extends React.Component {
         const { user, status, isCm, canRemove } = this.props;
         const avatarClassName = isCm ? 'avatar avatar--cm' : 'avatar';
         const style = this.state.pending ? {cursor: 'wait'} : {};
+        let statusClassName = styles.user__status;
+        if (status === 'APPROVED') {
+            statusClassName = styles.user__statusApproved;
+        } else if  (status === 'REJECTED') {
+            statusClassName = styles.user__statusRejected;
+        }
 
         return (
             <li className={styles.user} style={ style }>
                 <span className={ avatarClassName } style={{backgroundImage: `url(${user.photo})`}}/>
-                <span className="name">{ user.name }</span>
+                <span>{ user.name }</span>
                 { canRemove && <a onClick={ this.handleRemove } href='#'>Remove</a> }
-                <span className="status">{ status }</span>
+                { status && <span className={statusClassName}/> }
             </li>
         );
     }

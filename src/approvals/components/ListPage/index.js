@@ -9,6 +9,7 @@ import { toastr } from 'react-redux-toastr';
 import { Table, Modal, ModalBody, ModalFooter, ModalHeader, Button } from 'reactstrap';
 import UltimatePaginationBootstrap4 from 'react-ultimate-pagination-bootstrap-4'
 import ListRow from '../ListRow';
+import styles from './style.scss';
 
 class ApprovalsListPage extends React.Component {
     constructor(props) {
@@ -105,7 +106,7 @@ class ApprovalsListPage extends React.Component {
         return (
             <div>
                 <h1 className="text-capitalize d-flex align-items-center mt-4 mb-4">
-                    <span>{type}</span>
+                    <span className={styles.header}>{type}</span>
                     {this.state.initialized && loading && <small className="text-muted ml-2">...loading</small>}
                     <div className="ml-auto">
                         <DebounceInput
