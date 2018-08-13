@@ -26,10 +26,10 @@ browserSync({
 
   middleware: [
       historyApiFallback(),
-      proxy('/assets', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
-      proxy('/login', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
-      proxy('/ajax', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
-      proxy('/graphql', {target: 'https://www.greenflytest.com:443', changeOrigin: true }),
-      proxy('/graphiql', {target: 'https://www.greenflytest.com:443', changeOrigin: true })
+      proxy('/assets', {target: 'https://portal.greenflytest.com:443', changeOrigin: true }),
+      proxy('/login', {target: 'https://portal.greenflytest.com:443', changeOrigin: true }),
+      proxy('/ajax', {target: 'https://portal.greenflytest.com:443', changeOrigin: true }),
+      proxy('/graphql', {target: 'https://portal.greenflytest.com:443', changeOrigin: true }),
+      proxy('/graphiql', {target: 'https://portal.greenflytest.com:443', changeOrigin: true })
   ]
 });
